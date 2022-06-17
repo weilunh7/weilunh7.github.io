@@ -1,5 +1,7 @@
+/*dom操作*/
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
+/*遊戲常數*/
 class SnakePart{
     constructor(x, y){
         this.x = x;
@@ -18,6 +20,7 @@ let appleY = 15;
 let xV = 0;
 let yV = 0;
 let score = 0;
+/*遊戲主幹*/
 function startGame() {
     snakePosition();
     let lose = isOver();
@@ -40,11 +43,13 @@ function startGame() {
     
     setTimeout(startGame, 1000/speed);
 }
+/*速度設定*/
 function setSpeed() {
         if(score == 5){
             speed = 10;
         }    
 }
+/*勝利條件*/
 function isWin() {
     let win = false;
     if(score == 30){
@@ -57,6 +62,7 @@ function isWin() {
     }
     return win;
 }
+/*失敗條件*/
 function isOver() {
     let Over = false;
     if(headX < 0 || headX == 20 || headY < 0 || headY == 20){
@@ -78,10 +84,12 @@ function isOver() {
     }
     return Over;
 }
+/*初始化*/
 function clearScreen() {
     ctx.fillStyle= 'black';
     ctx.fillRect(0, 0, 400, 400);
 }
+/*蛇*/
 function drawSnake() {
     ctx.fillStyle = "green";
     for(let i = 0; i< snakePart.length; i++){
@@ -95,15 +103,18 @@ function drawSnake() {
     ctx.fillStyle = 'orange';
     ctx.fillRect(headX * tileCount, headY *tileCount, tileSize, tileSize);
 }
+/*蘋果*/
 function drawApple() {
     ctx.fillStyle = "red";
     ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize);
 }
+/*計分*/
 function drawScore() {
     ctx.fillStyle = "white";
     ctx.font = "10px Poppins";
     ctx.fillText("Score: " + score, canvas.width-210, 10);
 }
+/*蛇吃蘋果*/
 function checkColli() {
     if(appleX === headX && appleY === headY){
         appleX = Math.floor(Math.random() * tileCount);
@@ -115,11 +126,13 @@ function checkColli() {
         }
     }
 }
+/*蛇的位置*/
 function snakePosition() {
     headX = headX + xV;
     headY = headY + yV;
 }
 document.body.addEventListener('keydown', keyDown);
+/*按鍵判定*/
 function keyDown(event) {
     if(event.keyCode== 87){
         if(yV == 1) return;
@@ -142,6 +155,7 @@ function keyDown(event) {
         xV = 1;
     }
 }
+/*在玩一次*/
 function playAgain(event) {
     if(event.keyCode == 32){
         location.reload();
